@@ -1,6 +1,6 @@
 package dev.val.COGIP_API.dto;
 
-public record UserDTO(
+public record UserResponseDTO(
         int id,
         String username,
         String role) {
