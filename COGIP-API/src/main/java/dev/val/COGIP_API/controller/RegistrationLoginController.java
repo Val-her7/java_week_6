@@ -1,8 +1,8 @@
 package dev.val.COGIP_API.controller;
 
+import dev.val.COGIP_API.dto.LoginRequestDTO;
 import dev.val.COGIP_API.dto.RegisterRequestDTO;
 import dev.val.COGIP_API.dto.UserResponseDTO;
-import dev.val.COGIP_API.model.User;
 import dev.val.COGIP_API.repository.UserRepository;
 import dev.val.COGIP_API.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class RegistrationLoginController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequestDTO registerRequestDTO) {
-        if(userRepository.findByUsername(registerRequestDTO.username()).isPresent()) {
+        if (userRepository.findByUsername(registerRequestDTO.username()).isPresent()) {
             return ResponseEntity.badRequest().body("Username already exists");
         }
         UserResponseDTO createdUser = userService.createUser(registerRequestDTO);
@@ -34,11 +34,11 @@ public class RegistrationLoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody User user) {
+    public ResponseEntity<String> loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.username(), loginRequestDTO.password()));
             return ResponseEntity.ok("Login successful");
-        } catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
     }
