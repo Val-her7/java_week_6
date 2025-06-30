@@ -1,5 +1,6 @@
 package dev.val.COGIP_API.controller;
 
+import dev.val.COGIP_API.configuration.JwtUtils;
 import dev.val.COGIP_API.dto.LoginRequestDTO;
 import dev.val.COGIP_API.dto.RegisterRequestDTO;
 import dev.val.COGIP_API.dto.UserResponseDTO;
@@ -23,6 +24,7 @@ public class RegistrationLoginController {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
+    private final JwtUtils jwtUtils;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequestDTO registerRequestDTO) {
@@ -37,7 +39,8 @@ public class RegistrationLoginController {
     public ResponseEntity<String> loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.username(), loginRequestDTO.password()));
-            return ResponseEntity.ok("Login successful");
+            String token = jwtUtils.generateToken(loginRequestDTO.username());
+            return ResponseEntity.ok(token);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
