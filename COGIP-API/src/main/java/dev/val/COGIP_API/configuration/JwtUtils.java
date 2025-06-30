@@ -59,7 +59,7 @@ public class JwtUtils {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private String extractUsername(String token) {
+    public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
