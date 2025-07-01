@@ -66,5 +66,5 @@ INSERT INTO roles (name, description) VALUES
 
 -- Insertion into users
 INSERT INTO users (username, password, role_id) VALUES
-('jcranu', 'admin123', 1),
-('johndoe', 'user123', 2);
+('jcranu', '$2a$10$x0V3v4nEZlr7D2f.cpdKFOlpf06uNrpE6Ved/N1u/6UthwsZnhrZC', 1),
+('johndoe', '$2a$10$rg/AXDpWPDuK2zo87vRlXupoa1WkAlUbnXTCH5yVChPW/WLc3npxC', 2);
