@@ -3,11 +3,9 @@ package dev.val.COGIP_API.controller;
 import dev.val.COGIP_API.dto.CompanyDTO;
 import dev.val.COGIP_API.service.CompanyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +20,11 @@ public class CompanyController {
     @GetMapping
     public ResponseEntity<List<CompanyDTO>> getAllCompanies() {
         return ResponseEntity.ok(companyService.getAllCompanies());
+    }
+
+    @PostMapping
+    public ResponseEntity<CompanyDTO> addCompany(@RequestBody CompanyDTO companyDTO) {
+        CompanyDTO newCompany = companyService.createCompany(companyDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newCompany);
     }
 }
