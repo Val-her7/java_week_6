@@ -27,4 +27,34 @@ public class CompanyController {
         CompanyDTO newCompany = companyService.createCompany(companyDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newCompany);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCompanyById(@PathVariable int id) {
+        CompanyDTO companyDTO = companyService.getCompanyById(id);
+
+        if(companyDTO == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Company not found");
+        }
+        return ResponseEntity.ok(companyDTO);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCompanyById(@PathVariable int id, @RequestBody CompanyDTO companyDTO) {
+        CompanyDTO updated = companyService.updateCompanyById(id, companyDTO);
+
+        if(updated == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Company not found");
+        }
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCompanyById(@PathVariable int id) {
+        CompanyDTO deleted = companyService.deleteCompanyById(id);
+
+        if(deleted == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Company not found");
+        }
+        return ResponseEntity.ok(deleted);
+    }
 }
