@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -29,9 +31,9 @@ public class Company {
     private CompanyType companyType;
 
     @OneToMany(mappedBy = "company")
-    private List<Contact> contacts;
+    private List<Contact> contacts = new ArrayList<>();
 
     @OneToMany(mappedBy = "company")
-    private List<Invoice> invoices;
+    private List<Invoice> invoices = new ArrayList<>();
 
 }
