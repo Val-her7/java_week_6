@@ -27,4 +27,35 @@ public class CompanyService {
         Company saved = companyRepository.save(company);
         return companyDTOMapper.apply(saved);
     }
+
+    public CompanyDTO getCompanyById(int id) {
+        Company company = companyRepository.findById(id).orElse(null);
+
+        if(company == null) return null;
+
+        return companyDTOMapper.apply(company);
+    }
+
+    public CompanyDTO updateCompanyById(int id, CompanyDTO companyDTO) {
+        Company company = companyRepository.findById(id).orElse(null);
+
+        if(company == null) return null;
+
+        company.setName(companyDTO.name());
+        company.setVatNumber(companyDTO.vatNumber());
+        company.setCompanyType(companyDTO.companyType());
+
+        Company updated = companyRepository.save(company);
+        return companyDTOMapper.apply(updated);
+    }
+
+    public CompanyDTO deleteCompanyById(int id) {
+        Company company = companyRepository.findById(id).orElse(null);
+
+        if(company == null) return null;
+
+        CompanyDTO deletedCompany = companyDTOMapper.apply(company);
+        companyRepository.deleteById(id);
+        return deletedCompany;
+    }
 }
