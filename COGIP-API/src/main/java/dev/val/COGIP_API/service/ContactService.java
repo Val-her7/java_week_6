@@ -41,4 +41,17 @@ public class ContactService {
         Contact saved = contactRepository.save(contact);
         return contactDTOMapper.apply(saved);
     }
+
+    public ContactDTO updateContactById(int id, ContactDTO contactDTO) {
+        Contact contact = contactRepository.findById(id).orElse(null);
+
+        if(contact == null) return null;
+
+        contact.setFirstName(contactDTO.firstName());
+        contact.setLastName(contactDTO.lastName());
+        contact.setEmail(contactDTO.email());
+
+        Contact updated = contactRepository.save(contact);
+        return contactDTOMapper.apply(updated);
+    }
 }
