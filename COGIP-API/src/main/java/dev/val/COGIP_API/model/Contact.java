@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -33,5 +34,5 @@ public class Contact {
     private Company company;
 
     @OneToMany(mappedBy = "contact")
-    private List<Invoice> invoices;
+    private List<Invoice> invoices = new ArrayList<>();
 }
