@@ -44,12 +44,21 @@ public class ContactController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateContactById(@PathVariable int id, @RequestBody ContactDTO contactDTO) {
-        System.out.println("ContactDTO reçu : " + contactDTO);
         ContactDTO updated = contactService.updateContactById(id, contactDTO);
 
         if(updated == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contact not found");
         }
         return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteContactById(@PathVariable int id) {
+        ContactDTO deleted = contactService.deleteContactById(id);
+
+        if(deleted == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contact not found");
+        }
+        return ResponseEntity.ok(deleted);
     }
 }

@@ -54,4 +54,14 @@ public class ContactService {
         Contact updated = contactRepository.save(contact);
         return contactDTOMapper.apply(updated);
     }
+
+    public ContactDTO deleteContactById(int id) {
+        Contact contact = contactRepository.findById(id).orElse(null);
+
+        if(contact == null) return null;
+
+        ContactDTO deleted = contactDTOMapper.apply(contact);
+        contactRepository.deleteById(id);
+        return deleted;
+    }
 }
