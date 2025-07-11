@@ -3,11 +3,9 @@ package dev.val.COGIP_API.controller;
 import dev.val.COGIP_API.dto.InvoiceDTO;
 import dev.val.COGIP_API.service.InvoiceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +20,15 @@ public class InvoiceController {
     @GetMapping
     public ResponseEntity<List<InvoiceDTO>> getAllInvoices() {
         return ResponseEntity.ok(invoiceService.getAllInvoices());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getInvoiceById(@PathVariable int id) {
+        InvoiceDTO invoiceDTO = invoiceService.getInvoiceById(id);
+
+        if(invoiceDTO == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice not found");
+        }
+        return ResponseEntity.ok(invoiceDTO);
     }
 }
