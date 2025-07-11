@@ -3,6 +3,8 @@ package dev.val.COGIP_API.mapper;
 import dev.val.COGIP_API.dto.CompanySummaryDTO;
 import dev.val.COGIP_API.dto.ContactSummaryDTO;
 import dev.val.COGIP_API.dto.InvoiceDTO;
+import dev.val.COGIP_API.model.Company;
+import dev.val.COGIP_API.model.Contact;
 import dev.val.COGIP_API.model.Invoice;
 import org.springframework.stereotype.Component;
 
@@ -28,5 +30,14 @@ public class InvoiceDTOMapper implements Function<Invoice, InvoiceDTO> {
                 companySummaryDTO,
                 contactSummaryDTO
         );
+    }
+
+    public Invoice toEntity(InvoiceDTO invoiceDTO, Company company, Contact contact) {
+        Invoice invoice = new Invoice();
+        invoice.setNumber(invoiceDTO.number());
+        invoice.setDate(invoiceDTO.date());
+        invoice.setCompany(company);
+        invoice.setContact(contact);
+        return invoice;
     }
 }
