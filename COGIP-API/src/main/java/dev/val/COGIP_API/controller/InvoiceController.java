@@ -31,4 +31,14 @@ public class InvoiceController {
         }
         return ResponseEntity.ok(invoiceDTO);
     }
+
+    @PostMapping
+    public ResponseEntity<?> addInvoice(@RequestBody InvoiceDTO invoiceDTO) {
+        InvoiceDTO newInvoice = invoiceService.createInvoice(invoiceDTO);
+
+        if(newInvoice == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Company or contact provided not found");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(newInvoice);
+    }
 }
